@@ -9,9 +9,8 @@ def download_repo() -> None:
     logging.info("cloning...")
     repo_url: str = "https://github.com/ncgmyorg/sample.git"
     destination_directory: str = r"C:\Users\Nathaniel Gamo\Documents\Python Projects\sample"
-    repo = Repo.clone_from(repo_url, destination_directory)
+    Repo.clone_from(repo_url, destination_directory)
     
-
 def main() -> None:
     logging.basicConfig(
         level=logging.INFO,

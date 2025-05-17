@@ -55,9 +55,11 @@ def main() -> None:
                                             "Documents", 
                                             "Python Projects")
 
-        if config.GITHUB_ORG_NAME is not None and config.GITHUB_TOKEN is not None:
-            repo_urls: list[str] | None = get_org_repo_urls(config.GITHUB_ORG_NAME, 
-                                                            config.GITHUB_TOKEN)
+        if (config.GITHUB_ORG_NAME is not None 
+            and config.GITHUB_TOKEN is not None):
+            repo_urls: list[str] | None = get_org_repo_urls(
+                config.GITHUB_ORG_NAME, 
+                config.GITHUB_TOKEN)
 
         if repo_urls is not None:
             repo_url: str

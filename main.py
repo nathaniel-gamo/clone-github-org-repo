@@ -53,15 +53,14 @@ def main() -> None:
     if userprofile:
         local_directory: str = os.path.join(userprofile, 
                                             "Documents", 
-                                            "Python Projects")
+                                            "UiPath Projects")
 
         if config.GITHUB_ORG_NAME is not None and config.GITHUB_TOKEN is not None:
             repo_urls: list[str] | None = get_org_repo_urls(config.GITHUB_ORG_NAME, 
                                                             config.GITHUB_TOKEN)
 
-        repo_url: str
-
         if repo_urls is not None:
+            repo_url: str
             for repo_url in repo_urls:
                 destination_folder: str = repo_url.split("/")[-1]
 

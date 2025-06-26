@@ -1,3 +1,4 @@
+import argparse
 import logging
 import os
 
@@ -40,14 +41,7 @@ def get_org_repo_urls(org_name: str, token: str) -> list[str] | None:
         logging.error(f"Failed to get repository URLs. Error {e}.")
         return None
     
-def main() -> None:
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s %(levelname)s %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-        filename=f"{config.LOG_FILE_NAME}"
-    )
-
+def main(args: argparse.Namespace) -> None:
     userprofile: str | None = os.environ.get("USERPROFILE")
 
     if userprofile:
@@ -55,17 +49,17 @@ def main() -> None:
                                             "Documents", 
                                             "Python Projects")
 
-        if (config.GITHUB_ORG_NAME is not None 
-            and config.GITHUB_TOKEN is not None):
+        if (args.github_org_name is not None 
+            and args.github_token is not None):
             repo_urls: list[str] | None = get_org_repo_urls(
-                config.GITHUB_ORG_NAME, 
-                config.GITHUB_TOKEN)
+                args.github_org_name, 
+                args.github_token)
 
         if repo_urls is not None:
             repo_url: str
             for repo_url in repo_urls:
                 destination_folder: str = repo_url.split("/")[-1]
-
+                
                 destination_directory: str = os.path.join(local_directory, 
                                                         destination_folder)
 
@@ -76,4 +70,25 @@ def main() -> None:
                     clone_repo(repo_url, destination_directory)
 
 if __name__ == "__main__":
-    main()
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+        filename=f"{config.LOG_FILE_NAME}"
+    )
+
+    parser: argparse.ArgumentParser = argparse.ArgumentParser(
+        description="download-github-repositories")
+    
+    parser.add_argument("github_org_name", 
+                        type=str, 
+                        help="GitHub Organization")
+    
+    parser.add_argument("github_token", 
+                        type=str, 
+                        help="GitHub Token")
+    
+    
+    args: argparse.Namespace = parser.parse_args()
+
+    main(args)

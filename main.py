@@ -51,7 +51,7 @@ def main(args: argparse.Namespace) -> None:
                              "or GitHub Token is empty.")
 
         userprofile: str | None
-        if userprofile:= os.environ.get("USERPROFILE"):
+        if userprofile:= os.getenv("USERPROFILE"):
             local_directory: str = os.path.join(userprofile, 
                                            "Documents", 
                                             config.DESTINATION_FOLDER_NAME)

@@ -52,9 +52,11 @@ def main(args: argparse.Namespace) -> None:
 
         userprofile: str | None
         if userprofile:= os.getenv("USERPROFILE"):
-            local_directory: str = os.path.join(userprofile, 
-                                           "Documents", 
-                                            config.DESTINATION_FOLDER_NAME)
+
+            if config.DESTINATION_FOLDER_NAME is not None:
+                local_directory: str = os.path.join(userprofile, 
+                                                    "Documents", 
+                                                    config.DESTINATION_FOLDER_NAME)
             
             repo_urls: list[str] | None = get_org_repo_urls(
                 args.github_org, args.github_token)
@@ -82,7 +84,7 @@ if __name__ == "__main__":
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
-        filename=f"{config.LOG_FILE_NAME}"
+        filename=f"{config.LOG_FILE_PATH}"
     )
 
     parser: argparse.ArgumentParser = argparse.ArgumentParser(

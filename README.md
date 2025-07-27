@@ -6,8 +6,8 @@ This project template for Python is created by ncg.
 
 ### Create .env file.
 ```
-LOG_FILE_NAME="app.log"
-DESTINATION_FOLDER_NAME="Cloned Repositories"
+LOG_FILE_NAME=app.log
+DESTINATION_FOLDER_NAME=Cloned Repositories
 ```
 
 ### Create virtual environment.

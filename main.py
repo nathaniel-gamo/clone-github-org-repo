@@ -49,14 +49,15 @@ def main(args: argparse.Namespace) -> None:
         if args.github_org is None or args.github_token is None:
             raise ValueError("GitHub Organization Name "
                              "or GitHub Token is empty.")
+        
+        if config.DESTINATION_FOLDER_NAME is None:
+            raise ValueError("Destination folder name is empty.")
 
         userprofile: str | None
         if userprofile:= os.getenv("USERPROFILE"):
-
-            if config.DESTINATION_FOLDER_NAME is not None:
-                local_directory: str = os.path.join(userprofile, 
-                                                    "Documents", 
-                                                    config.DESTINATION_FOLDER_NAME)
+            local_directory: str = os.path.join(userprofile, 
+                                                "Documents", 
+                                                config.DESTINATION_FOLDER_NAME)
             
             repo_urls: list[str] | None = get_org_repo_urls(
                 args.github_org, args.github_token)

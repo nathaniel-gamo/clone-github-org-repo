@@ -1,12 +1,31 @@
 import argparse
 import logging
 import os
+import time
+from typing import Any, Callable
 
 from git import Repo
 from github import Github, Organization, Repository
 
 import src.config as config
 
+
+def retry(function: Callable[[argparse.Namespace], None]) -> Callable[..., 
+                                                                      None]:
+    def wrapper(*args: Any, **kwargs: Any) -> None:
+        retry_count: int = 0
+        while True:
+            try:
+                function(*args, **kwargs)
+                break
+            except Exception as e:
+                logging.error("An error occurred during the "
+                      f"execution of main.py.\nError message: {e}")
+                if retry_count >= config.MAX_RETRIES:
+                    break
+                retry_count += 1
+                time.sleep(config.RETRY_INTERVAL_SECONDS)
+    return wrapper
 
 def clone_repo(repo_url: str , destination_directory: str) -> None:
     logging.info(f"Cloning {repo_url}...")
@@ -81,29 +100,38 @@ def main(args: argparse.Namespace) -> None:
                       f"execution of main.py.\nError message: {e}")
 
 if __name__ == "__main__":
+    parser: argparse.ArgumentParser = argparse.ArgumentParser(
+        description="download-github-repositories")
+    
+    parser.add_argument("--dotenv_path",
+                        type=str,
+                        help="The file path of .env.")
+    
+    parser.add_argument("github_org",
+                        type=str,
+                        default=None,
+                        nargs="?",
+                        help="GitHub Organization"
+                        )
+    
+    parser.add_argument("github_token",
+                        type=str,
+                        default=None,
+                        nargs="?",
+                        help="GitHub Token")
+    
+    args: argparse.Namespace = parser.parse_args()
+
+    if args.dotenv_path:
+        config.call_load_dotenv(args.dotenv_path)
+    else:
+        config.call_load_dotenv()
+
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
         filename=f"{config.LOG_FILE_PATH}"
     )
-
-    parser: argparse.ArgumentParser = argparse.ArgumentParser(
-        description="download-github-repositories")
-    
-    parser.add_argument("github_org", 
-                        default=None, 
-                        nargs="?", 
-                        type=str, 
-                        help="GitHub Organization"
-                        )
-    
-    parser.add_argument("github_token", 
-                        default=None, 
-                        nargs="?", 
-                        type=str , 
-                        help="GitHub Token")
-    
-    args: argparse.Namespace = parser.parse_args()
 
     main(args)

@@ -7,6 +7,8 @@ This project template for Python is created by ncg.
 ### Create .env file.
 ```
 LOG_FILE_PATH=app.log
+MAX_RETRIES=0
+RETRY_INTERVAL_SECONDS=0
 DESTINATION_FOLDER_NAME=Cloned Repositories
 ```
 

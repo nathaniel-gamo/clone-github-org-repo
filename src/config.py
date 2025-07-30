@@ -3,15 +3,28 @@ import sys
 
 from dotenv import load_dotenv
 
-basedir: str
+LOG_FILE_PATH: str | None = None
+MAX_RETRIES: int = 0
+RETRY_INTERVAL_SECONDS: int = 0
+DESTINATION_FOLDER_NAME: str | None
+
+_basedir: str
 if getattr(sys, "frozen", False):
-    basedir = os.path.dirname(sys.executable)
+    _basedir = os.path.dirname(sys.executable)
 else:
-    basedir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    _basedir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-dotenv_path: str = os.path.join(basedir, ".env")
+_dotenv_path: str = os.path.join(_basedir, ".env")
 
-load_dotenv(dotenv_path=dotenv_path, override=True)
+def call_load_dotenv(dotenv_path: str = _dotenv_path) -> None:
+    global LOG_FILE_PATH
+    global MAX_RETRIES
+    global RETRY_INTERVAL_SECONDS
+    global DESTINATION_FOLDER_NAME
 
-LOG_FILE_PATH: str | None = os.getenv("LOG_FILE_PATH")
-DESTINATION_FOLDER_NAME: str | None = os.getenv("DESTINATION_FOLDER_NAME")
+    load_dotenv(dotenv_path=dotenv_path, override=True)
+
+    LOG_FILE_PATH = os.getenv("LOG_FILE_PATH")
+    MAX_RETRIES = int(os.getenv("MAX_RETRIES", "0"))
+    RETRY_INTERVAL_SECONDS = int(os.getenv("RETRY_INTERVAL_SECONDS", "0"))
+    DESTINATION_FOLDER_NAME = os.getenv("DESTINATION_FOLDER_NAME")

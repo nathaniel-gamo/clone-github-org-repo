@@ -10,7 +10,7 @@ LOG_FILE_PATH=app.log
 MAX_RETRIES=3
 RETRY_INTERVAL_SECONDS=0
 RETRY_RAISE_EXCEPTION=True
-DESTINATION_FOLDER_NAME=Cloned Repositories (TSI)
+DESTINATION_FOLDER_NAME=Cloned Repositories
 ```
 
 ### Create virtual environment.

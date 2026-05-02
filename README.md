@@ -1,15 +1,16 @@
-# Python Project Template
+# Clone GitHub Organization Repositories
 
-This project template for Python is created by ncg.
+Clone repositories of your GitHub Organization!
 
 ## Installation
 
 ### Create .env file.
 ```
 LOG_FILE_PATH=app.log
-MAX_RETRIES=0
+MAX_RETRIES=3
 RETRY_INTERVAL_SECONDS=0
-DESTINATION_FOLDER_NAME=Cloned Repositories
+RETRY_RAISE_EXCEPTION=True
+DESTINATION_FOLDER_NAME=Cloned Repositories (TSI)
 ```
 
 ### Create virtual environment.

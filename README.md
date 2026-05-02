@@ -1,8 +1,8 @@
 # Clone GitHub Organization Repositories
 
-Clone repositories of your GitHub Organization!
+Clone repositories from your GitHub organization using a Python CLI.
 
-## Installation
+## Guide
 
 ### Create .env file.
 ```
@@ -28,7 +28,12 @@ python -m venv .venv
 python -m pip install -U pip
 ```
 
-### Install dependencies.
+### Install packages.
 ```bash
 pip install -r requirements.txt
+```
+
+### Create executable file.
+```bash
+pyinstaller main.py --onefile --console --clean --name "main" --distpath "C:\Users\{User Profile}\Downloads"
 ```

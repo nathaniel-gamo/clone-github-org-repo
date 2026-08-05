@@ -2,7 +2,8 @@ import argparse
 import logging
 import os
 import time
-from typing import Any, Callable
+from typing import Any
+from collections.abc import Callable
 
 from git import Repo
 from github import Github, Organization, Repository

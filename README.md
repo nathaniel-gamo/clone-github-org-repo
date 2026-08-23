@@ -6,8 +6,7 @@ Clone repositories from your GitHub organization using a Python CLI.
 
 ### Create .env file.
 ```
-LOG_FILE_PATH=app.log
-MAX_RETRIES=3
+MAX_RETRIES=0
 RETRY_INTERVAL_SECONDS=0
 RETRY_RAISE_EXCEPTION=True
 DESTINATION_FOLDER_NAME=Cloned Repositories
@@ -35,5 +34,5 @@ pip install -r requirements.txt
 
 ### Create executable file.
 ```bash
-pyinstaller main.py --onefile --console --clean --name "main" --distpath "C:\Users\{User Profile}\Downloads"
+python -m nuitka main.py --onefile --windows-console-mode=force --remove-output --assume-yes-for-downloads --output-filename=clone-github-org-repo.exe --output-dir= "C:\Users\{User Profile}\Downloads"
 ```

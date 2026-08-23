@@ -8,7 +8,7 @@ from dotenv import dotenv_values, load_dotenv
 def _get_dotenv_path() -> str:
 
     base_dir: Path
-    if getattr(sys, "frozen", False) or getattr(sys, "compiled", False):
+    if getattr(sys, "frozen", False) or "__compiled__" in globals():
         base_dir = Path(sys.executable).parent
 
     else:

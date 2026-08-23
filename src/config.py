@@ -5,12 +5,11 @@ from dotenv import dotenv_values, load_dotenv
 
 
 def _get_dotenv_path() -> str:
-    if getattr(sys, "frozen", False):
+    if getattr(sys, "frozen", False) or "__compiled__" in globals():
         return os.path.join(os.path.dirname(sys.executable), ".env")
     
     return os.path.join(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
-        ".env")
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
 
 def load_config(dotenv_path: str = "", 
                 dotenv_only: bool = True) -> dict[str, str | None]:

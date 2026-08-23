@@ -34,5 +34,5 @@ pip install -r requirements.txt
 
 ### Create executable file.
 ```bash
-python -m nuitka main.py --onefile --windows-console-mode=force --remove-output --assume-yes-for-downloads --output-filename=clone-github-org-repo.exe --output-dir= "C:\Users\{User Profile}\Downloads"
+python -m nuitka main.py --onefile --windows-console-mode=force --remove-output --assume-yes-for-downloads --output-filename=clone-github-org-repo.exe --output-dir="C:\Users\{User Profile}\Downloads"
 ```
